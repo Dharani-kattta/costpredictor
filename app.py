@@ -16,7 +16,7 @@ try:
     XGBOOST_AVAILABLE = True
 except ImportError:
     XGBOOST_AVAILABLE = False
-    st.error("⚠️ XGBoost is not installed. Please run: pip install xgboost==1.7.6")
+    st.error("⚠ XGBoost is not installed. Please run: pip install xgboost==1.7.6")
     st.stop()
 
 # Set page configuration - MUST be the first Streamlit command
@@ -644,15 +644,9 @@ def create_age_analysis_chart(current_inputs, model, features):
 with st.sidebar:
     st.image("https://img.icons8.com/color/96/000000/hospital-2.png", width=100)
     st.markdown('<p class="custom-header" style="font-size: 1.5rem;">User Dashboard</p>', unsafe_allow_html=True)
-    user_type = st.radio("Select User Type", ["Patient", "Insurance Provider"], key="user_type_radio")
     
-    st.markdown("---")
-    if user_type == "Insurance Provider":
-        st.markdown('<p class="subheader">Provider Analytics</p>', unsafe_allow_html=True)
-        st.markdown('<div class="highlight-box">Access detailed analytics and risk assessment for potential clients.</div>', unsafe_allow_html=True)
-    else:
-        st.markdown('<p class="subheader">Patient Portal</p>', unsafe_allow_html=True)
-        st.markdown('<div class="highlight-box">Find the best insurance plan based on your health profile.</div>', unsafe_allow_html=True)
+    st.markdown('<p class="subheader">Patient Portal</p>', unsafe_allow_html=True)
+st.markdown('<div class="highlight-box">Find the best insurance plan based on your health profile.</div>', unsafe_allow_html=True)
 
 # Main content
 st.markdown('<h1 class="custom-header">🏥 Healthcare Cost Predictor</h1>', unsafe_allow_html=True)
@@ -691,7 +685,7 @@ with col3:
     st.markdown("""
         <div style="padding: 1rem; background-color: #f8f9fa; border-radius: 5px; margin-top: 1rem;">
             <p style="color: #666666; margin-bottom: 0;">
-                ℹ️ The number of prior conditions helps in assessing overall health status and potential cost implications.
+                ℹ The number of prior conditions helps in assessing overall health status and potential cost implications.
             </p>
         </div>
     """, unsafe_allow_html=True)
@@ -700,7 +694,7 @@ with col3:
 # Predict button
 if st.button("Predict Out-of-Pocket Cost"):
     if model is None:
-        st.error("⚠️ Model not loaded. Please ensure xgboost_tuned_model.pkl is available.")
+        st.error("⚠ Model not loaded. Please ensure xgboost_tuned_model.pkl is available.")
     else:
         try:
             # Create input data dictionary with all features
@@ -891,7 +885,7 @@ if st.button("Predict Out-of-Pocket Cost"):
                 st.markdown("""
                     <div class="highlight-box" style="border-left: 4px solid #EF5350;">
                         <p style="color: #EF5350; margin-bottom: 0.5rem;">
-                            <strong>⚠️ Low Coverage Alert:</strong>
+                            <strong>⚠ Low Coverage Alert:</strong>
                         </p>
                         <p style="color: #757575; font-size: 0.9rem; margin-bottom: 0;">
                             The estimated coverage is unusually low. This might be due to:
@@ -953,7 +947,7 @@ if st.button("Predict Out-of-Pocket Cost"):
                 """, unsafe_allow_html=True)
                 
         except Exception as e:
-            st.error(f"⚠️ Error making prediction: {str(e)}")
+            st.error(f"⚠ Error making prediction: {str(e)}")
             st.error("Please check if all input values are in the expected format and range.")
             st.error(f"Input data shape: {input_data.shape if 'input_data' in locals() else 'unknown'}")
             st.error("Features used: " + ", ".join(FEATURES))
@@ -962,8 +956,8 @@ if st.button("Predict Out-of-Pocket Cost"):
 st.markdown("""
     <div class="highlight-box" style="margin-top: 2rem;">
         <p style="color: #666666; text-align: center; margin-bottom: 0;">
-            ⚠️ This is an estimation tool. Actual costs may vary based on specific insurance plans and provider policies.
+            ⚠ This is an estimation tool. Actual costs may vary based on specific insurance plans and provider policies.
             <br>Predictions are based on historical data and current market trends.
         </p>
     </div>
-""", unsafe_allow_html=True) 
+""", unsafe_allow_html=True)
