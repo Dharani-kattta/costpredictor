@@ -251,7 +251,7 @@ st.markdown("""
 
 # Define the features used in the model - Order must match exactly with the model's expected order
 FEATURES = [
-    'payer_name', 'age', 'race', 'income', 
+    'payer_name', 'age','gender', 'race', 'income', 
     'encounterclass', 'base_encounter_cost', 'num_procedures', 
     'total_proc_base_cost', 'num_prior_conditions'
 ]
@@ -284,6 +284,11 @@ PAYER_ENCODING = {
     'Medicare': 7,
     'NO_INSURANCE': 8,
     'UnitedHealthcare': 9
+}
+GENDER_ENCODING = {
+    'male': 0,
+    'female': 1,
+    'other': 2
 }
 
 RACE_ENCODING = {
@@ -664,6 +669,8 @@ with col1:
     st.markdown('<div class="metric-card">', unsafe_allow_html=True)
     st.subheader("Demographics")
     age = st.number_input("Age", min_value=0, max_value=120, value=30, key="age_input")
+    gender = st.selectbox("Gender", list(GENDER_ENCODING.keys()), format_func=lambda x: x.capitalize(), key="gender_select")
+
     race = st.selectbox("Race", list(RACE_ENCODING.keys()), format_func=lambda x: x.capitalize(), key="race_select")
     income = st.number_input("Annual Income ($)", min_value=0, value=50000, step=1000, key="income_input")
     payer_name = st.selectbox("Insurance Provider", list(PAYER_ENCODING.keys()), key="payer_select")
@@ -701,6 +708,7 @@ if st.button("Predict Out-of-Pocket Cost"):
             input_dict = {
                 'payer_name': PAYER_ENCODING[payer_name],
                 'age': age,
+                'gender': GENDER_ENCODING[gender],
                 'race': RACE_ENCODING[race],
                 'income': income,
                 'encounterclass': ENCOUNTER_ENCODING[encounterclass],
